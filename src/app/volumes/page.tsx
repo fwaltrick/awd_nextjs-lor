@@ -1,13 +1,10 @@
 import Link from 'next/link'
-import { introduction, volumes } from '../lib/data'
+import { volumes } from '../../lib/data'
 
-export default function HomePage() {
+export default function VolumesPage() {
   return (
     <main className="flex flex-col gap-4 p-8 max-w-xl mx-auto">
-      <h1 className="text-4xl font-bold mb-4">Lord of the Rings</h1>
-      <p>{introduction}</p>
-      <h2 className="text-2xl font-semibold mt-4">All Volumes</h2>
-
+      <h1 className="text-4xl font-bold mb-4">All Volumes</h1>
       <ul>
         {volumes.map((volume) => (
           <li key={volume.slug}>
