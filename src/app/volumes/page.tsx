@@ -1,5 +1,7 @@
+'use client'
 import Link from 'next/link'
 import { volumes } from '../../lib/data'
+import VolumeButton from './VolumeButton'
 
 export default function VolumesPage() {
   return (
@@ -17,6 +19,12 @@ export default function VolumesPage() {
           </li>
         ))}
       </ul>
+      <div className="flex justify-start">
+        <VolumeButton
+          volumes={volumes}
+          className="inline-block bg-blue-400 hover:bg-blue-600 text-white font-bold mt-8 py-2 px-4 rounded"
+        />
+      </div>
     </main>
   )
 }
