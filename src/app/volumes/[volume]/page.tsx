@@ -2,8 +2,14 @@ import { volumes } from '../../../lib/data'
 import Link from 'next/link'
 import Image from 'next/image'
 
-export default function TwoTowersPage() {
-  const index = volumes.findIndex(({ slug }) => slug === 'the-two-towers')
+type Props = {
+  params: {
+    volume: string
+  }
+}
+
+export default function VolumeDetailPage({ params }: Props) {
+  const index = volumes.findIndex(({ slug }) => slug === params.volume)
   const volume = volumes[index]
   const prev = index > 0 ? volumes[index - 1] : null
   const next = index < volumes.length - 1 ? volumes[index + 1] : null
@@ -23,7 +29,7 @@ export default function TwoTowersPage() {
           </li>
         ))}
       </ul>
-      <div className="flex  mb-6">
+      <div className="flex mb-6">
         <Image
           src={volume.cover}
           alt={`Cover of ${volume.title}`}
