@@ -1,6 +1,7 @@
 import { volumes } from '../../../lib/data'
 import Link from 'next/link'
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
 
 type Props = {
   params: {
@@ -8,35 +9,42 @@ type Props = {
   }
 }
 
-export default function VolumeDetailPage({ params }: Props) {
-  const index = volumes.findIndex(({ slug }) => slug === params.volume)
-  const volume = volumes[index]
+export default async function VolumeDetailPage({ params }: Props) {
+  const { volume } = await params
+  const index = volumes.findIndex(({ slug }) => slug === volume)
+  const volumeData = volumes[index]
+
+  //   // To simulate a delay of 2 seconds and show the loading spinner
+  //   await new Promise((resolve) => setTimeout(resolve, 2000))
+
   const prev = index > 0 ? volumes[index - 1] : null
   const next = index < volumes.length - 1 ? volumes[index + 1] : null
-  if (!volume) return null
+  if (!volumeData) return notFound()
+
   return (
     <main className="max-w-xl mx-auto p-8 flex flex-col gap-6">
       <Link href="/volumes" className="text-blue-400  mb-4">
         &larr; All Volumes
       </Link>
-      <h1 className="text-3xl font-bold mb-2">{volume.title}</h1>
-      <p className="mb-4">{volume.description}</p>
+      <div className="flex mb-6">
+        <Image
+          src={volumeData.cover}
+          alt={`Cover of ${volumeData.title}`}
+          width={140}
+          height={227}
+        />
+      </div>
+      <h1 className="text-3xl font-bold mb-2">{volumeData.title}</h1>
+      <p className="mb-4">{volumeData.description}</p>
       <ul className="list-disc pl-5 mb-6">
-        {volume.books.map((book) => (
+        {volumeData.books.map((book) => (
           <li key={book.ordinal}>
             <span className="font-semibold mr-2">{book.ordinal}:</span>
             {book.title}
           </li>
         ))}
       </ul>
-      <div className="flex mb-6">
-        <Image
-          src={volume.cover}
-          alt={`Cover of ${volume.title}`}
-          width={140}
-          height={230}
-        />
-      </div>
+
       <div className="flex justify-between mt-4">
         {prev ? (
           <Link
