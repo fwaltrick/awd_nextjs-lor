@@ -1,13 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from 'next/link'
-import { volumes } from '../../lib/data'
 
-export default function VolumesPage() {
+export default async function VolumesPage() {
+  // Fetch volumes from API
+  const res = await fetch('/api/volumes', { cache: 'no-store' })
+  const volumes = await res.json()
+
   const randomIndex = Math.floor(Math.random() * volumes.length)
   return (
     <main className="flex flex-col gap-4 p-8 max-w-xl mx-auto">
       <h1 className="text-3xl font-semibold mb-4">All Volumes</h1>
       <ul>
-        {volumes.map((volume) => (
+        {volumes.map((volume: any) => (
           <li key={volume.slug}>
             <Link
               href={`/volumes/${volume.slug}`}

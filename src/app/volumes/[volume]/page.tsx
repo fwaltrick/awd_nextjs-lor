@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { volumes } from '../../../lib/data'
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
@@ -12,7 +11,15 @@ type Props = {
 
 export default async function VolumeDetailPage({ params }: Props) {
   const { volume } = await params
-  const index = volumes.findIndex(({ slug }) => slug === volume)
+
+  // Fetch all volumes from API
+  const volumesRes = await fetch('/api/volumes', {
+    cache: 'no-store',
+  })
+  const volumes = await volumesRes.json()
+
+  // Find current volume
+  const index = volumes.findIndex(({ slug }: any) => slug === volume)
   const volumeData = volumes[index]
 
   //   // To simulate a delay of 2 seconds and show the loading spinner
