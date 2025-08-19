@@ -44,9 +44,12 @@ export default function RootLayout({
           <div className="flex flex-col sm:flex-row items-center gap-8">
             <ul className="flex gap-6 text-lg font-semibold">
               <li>
-                <a href="/volumes" className="hover:text-blue-400 transition">
+                <Link
+                  href="/volumes"
+                  className="hover:text-blue-400 transition"
+                >
                   Volumes
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="/about" className="hover:text-blue-400 transition">

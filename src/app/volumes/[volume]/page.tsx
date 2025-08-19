@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { volumes } from '../../../lib/data'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -37,12 +38,16 @@ export default async function VolumeDetailPage({ params }: Props) {
       <h1 className="text-3xl font-bold mb-2">{volumeData.title}</h1>
       <p className="mb-4">{volumeData.description}</p>
       <ul className="list-disc pl-5 mb-6">
-        {volumeData.books.map((book) => (
-          <li key={book.ordinal}>
-            <span className="font-semibold mr-2">{book.ordinal}:</span>
-            {book.title}
-          </li>
-        ))}
+        {volumeData.books && volumeData.books.length > 0 ? (
+          volumeData.books.map((book: any) => (
+            <li key={book.ordinal}>
+              <span className="font-semibold mr-2">{book.ordinal}:</span>
+              {book.title}
+            </li>
+          ))
+        ) : (
+          <li>No books available</li>
+        )}
       </ul>
 
       <div className="flex justify-between mt-4">
